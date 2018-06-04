@@ -24,13 +24,29 @@ az group create --location southcentralus --name logicapp-demo
 1. Deploy Infrastructure Template to Resource Group and create a container.
 
 ```powershell
+# Set Variables
 $ResourceGroup = "logicapp-demo"
 $ContainerName = "customers"
-az group deployment create --template-file azuredeploy.json --parameters azuredeploy.parameters.json --resource-group $ResourceGroup
-$StorageAccount = Get-AzureRmStorageAccount -ResourceGroupName $ResourceGroup
-$Keys = Get-AzureRmStorageAccountKey -Name $StorageAccount.StorageAccountName -ResourceGroupName $ResourceGroup
-$StorageContext = New-AzureStorageContext -StorageAccountName $StorageAccount.StorageAccountName -StorageAccountKey $Keys[0].Value
-New-AzureStorageContainer -Name $ContainerName -Context $StorageContext -Permission Off
+
+# Deploy ARM Template
+az group deployment create --template-file azuredeploy.json `
+    --parameters azuredeploy.parameters.json `
+    --resource-group $ResourceGroup
+
+# Get Storage Context
+$StorageAccount = Get-AzureRmStorageAccount `
+    -ResourceGroupName $ResourceGroup
+$Keys = Get-AzureRmStorageAccountKey `
+    -Name $StorageAccount.StorageAccountName `
+    -ResourceGroupName $ResourceGroup
+$StorageContext = New-AzureStorageContext `
+    -StorageAccountName $StorageAccount.StorageAccountName `
+    -StorageAccountKey $Keys[0].Value
+
+# Create Blob Container
+New-AzureStorageContainer -Name $ContainerName 
+    -Context $StorageContext 
+    -Permission Off
 ```
 
 1. Prepare the Database
