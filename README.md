@@ -1,21 +1,21 @@
 # logicapp-demo
 
-Infrastructure as Code - Logic App Solution
+__Infrastructure as Code - Logic App Solution__
 
 ![[0]][0]
-_Architecture Diagram_
 
 ## Getting Started
 
 
 __Deploy the Infrastructure__
+
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdanielscholl%2Flogicapp-demo%2Fmaster%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
 1. Create a Resource Group
 
-```bash
+```powershell
 az group create --location southcentralus --name logicapp-demo
 ```
 
@@ -23,7 +23,7 @@ az group create --location southcentralus --name logicapp-demo
 
 1. Deploy Infrastructure Template to Resource Group and create a container.
 
-```bash
+```powershell
 $ResourceGroup = "logicapp-demo"
 $ContainerName = "customers"
 az group deployment create --template-file azuredeploy.json --parameters azuredeploy.parameters.json --resource-group $ResourceGroup
@@ -64,6 +64,7 @@ GO
 ```
 
 __Deploy the Logic App__
+
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdanielscholl%2Flogicapp-demo%2Fmaster%2Flogicapp.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
