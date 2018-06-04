@@ -74,7 +74,7 @@
                 "parameterValues": {
                     "server": "[parameters('sqlServer')]",
                     "database": "[parameters('sqlDatabase')]",
-                    "authType": "windows",
+                    "authType": "sa",
                     "username": "[parameters('sqlUser')]",
                     "password": "[parameters('sqlPassword')]"
                 }
