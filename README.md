@@ -45,7 +45,7 @@ $StorageContext = New-AzureStorageContext `
 
 # Create Blob Container
 New-AzureStorageContainer -Name $ContainerName  `
-    -Context $StorageContext 
+    -Context $StorageContext `
     -Permission Off
 ```
 
