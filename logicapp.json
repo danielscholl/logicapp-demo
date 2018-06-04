@@ -47,7 +47,7 @@
             "metadata": {
                 "description": "The procedure to run."
             },
-            "defaultValue": "[[dbo].[uspMyProcedure]]"
+            "defaultValue": "dbo.uspMyProcedure"
         },
         "location": {
             "type": "string",
