@@ -1,0 +1,198 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "prefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Small unique string."
+      },
+      "minLength": 2,
+      "maxLength": 6
+    },
+    "storageAccountType": {
+      "type": "string",
+      "metadata": {
+        "description": "Account type, premium vs standard, and local, global redundancy"
+      },
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_GRS",
+        "Premium_LRS"
+      ],
+      "defaultValue": "Standard_LRS"
+    },
+    "sqlAdministratorLogin": {
+      "type": "string",
+      "metadata": {
+        "description": "The admin user of the SQL Server"
+      },
+      "defaultValue": "AzureUser"
+    },
+    "sqlAdministratorLoginPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "The password of the admin user of the SQL Server"
+      },
+      "defaultValue": "AzurePassword@123"
+    },
+    "storageAccountKey": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Storage Account Key hosting bacpac file."
+      }
+    },
+    "storageUri": {
+      "type": "securestring",
+      "metadata": {
+        "description": "URL Resource of the bacpac file."
+      },
+      "defaultValue": "https://cloudcodeit.blob.core.windows.net/public/logicappdemo.bacpac"
+    },
+    "databasesNames": {
+      "type": "array",
+      "metadata": {
+        "description": "The SQL Databases names."
+      },
+      "defaultValue": ["logicappdemo"]
+    },
+    "databaseCollation": {
+      "type": "string",
+      "metadata": {
+        "description": "The SQL Database collation."
+      },
+      "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
+    }
+  },
+  "variables": {
+    "cleanPrefix": "[toLower(replace(parameters('prefix'),'-', ''))]",
+    "storageAccountName": "[concat(variables('cleanPrefix'), uniqueString(resourceGroup().id))]",
+    "storageId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+    "sqlserverName": "[concat(variables('cleanPrefix'), '-sql-', uniqueString(resourceGroup().id))]",
+    "elasticPoolName": "[concat(variables('cleanPrefix'), '-sql-pool-', uniqueString(resourceGroup().id))]",
+    "storageKeyType": "Primary"
+  },
+  "resources": [{
+    "comments": "## Storage Account ##",
+    "name": "[variables('storageAccountName')]",
+    "type": "Microsoft.Storage/storageAccounts",
+    "apiVersion": "2016-01-01",
+    "location": "[resourceGroup().location]",
+    "tags": {
+      "Company": "[parameters('prefix')]"
+    },
+    "kind": "Storage",
+    "sku": {
+      "name": "[parameters('storageAccountType')]",
+      "tier": "Standard"
+    },
+    "properties": {
+      "encryption": {
+        "keySource": "Microsoft.Storage",
+        "services": {
+          "blob": {
+            "enabled": true
+          }
+        }
+      }
+    }
+  },
+  {
+      "name": "[variables('sqlserverName')]",
+      "type": "Microsoft.Sql/servers",
+      "apiVersion": "2014-04-01-preview",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Company": "[parameters('prefix')]"
+      },
+      "properties": {
+        "administratorLogin": "[parameters('sqlAdministratorLogin')]",
+        "administratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
+        "version": "12.0"
+      }
+    },
+    {
+      "name": "[concat(variables('sqlserverName'), '/', variables('elasticPoolName'))]",
+      "type": "Microsoft.Sql/servers/elasticpools",
+      "apiVersion": "2014-04-01-preview",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Company": "[parameters('prefix')]"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Sql/servers/', variables('sqlserverName'))]"
+      ],
+      "properties": {
+        "edition": "Standard",
+        "dtu": "100",
+        "databaseDtuMin": "0",
+        "databaseDtuMax": "100"
+      }
+    },
+    {
+      "name": "[concat(variables('sqlservername'), '/', 'AllowAllWindowsAzureIps')]",
+      "type": "Microsoft.Sql/servers/firewallrules",
+      "apiVersion": "2014-04-01-preview",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Sql/servers/', variables('sqlservername'))]"
+      ],
+      "properties": {
+        "endIpAddress": "0.0.0.0",
+        "startIpAddress": "0.0.0.0"
+      }
+    },
+    {
+      "name": "[concat(variables('sqlservername'), '/', variables('cleanPrefix'), '-', parameters('databasesNames')[copyIndex()])]",
+      "type": "Microsoft.Sql/servers/databases",
+      "apiVersion": "2014-04-01-preview",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Company": "[parameters('prefix')]"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Sql/servers/', variables('sqlserverName'))]",
+        "[concat('Microsoft.Sql/servers/', variables('sqlserverName') ,'/elasticpools/', variables('elasticPoolName'))]"
+      ],
+      "properties": {
+        "collation": "[parameters('databaseCollation')]",
+        "requestedServiceObjectiveName": "ElasticPool",
+        "elasticPoolName": "[variables('elasticPoolName')]"
+      },
+      "resources": [{
+        "name": "Import",
+        "type": "extensions",
+        "apiVersion": "2014-04-01-preview",
+        "dependsOn": [
+          "[concat(variables('cleanPrefix'), '-', parameters('databasesNames')[copyIndex()])]"
+        ],
+        "properties": {
+          "storageKeyType": "[variables('storageKeyType')]",
+          "storageKey": "[parameters('storageAccountKey')]",
+          "storageUri": "[parameters('storageUri')]",
+          "administratorLogin": "[parameters('sqlAdministratorLogin')]",
+          "administratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
+          "operationMode": "Import"
+        }
+      }],
+      "copy": {
+        "name": "addDatabasesInElasticPool",
+        "count": "[length(parameters('databasesNames'))]"
+      }
+    }
+  ],
+  "outputs": {
+    "storageAccount": {
+      "type": "object",
+      "value": {
+        "id": "[variables('storageId')]",
+        "name": "[variables('storageAccountName')]",
+        "key": "[listKeys(variables('storageId'), '2016-01-01').keys[0].value]"
+      }
+    },
+    "sqlSvrFqdn": {
+      "type": "string",
+      "value": "[reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName]"
+    }
+  }
+}

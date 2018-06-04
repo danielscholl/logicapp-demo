@@ -1,0 +1,133 @@
+{
+  "properties": {
+    "lenses": {
+      "0": {
+        "order": 0,
+        "parts": {
+          "0": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "colSpan": 11,
+              "rowSpan": 9
+            },
+            "metadata": {
+              "inputs": [],
+              "type": "Extension[azure]/HubsExtension/PartType/MarkdownPart",
+              "settings": {
+                "content": {
+                  "settings": {
+                    "content": "<img src='https://dascholl.blob.core.windows.net/diagrams/LogicApp-ImportDB.png'/>\n",
+                    "title": "Architecture",
+                    "subtitle": "Daniel Scholl"
+                  }
+                }
+              }
+            }
+          },
+          "1": {
+            "position": {
+              "x": 11,
+              "y": 0,
+              "colSpan": 7,
+              "rowSpan": 9
+            },
+            "metadata": {
+              "inputs": [],
+              "type": "Extension[azure]/HubsExtension/PartType/MarkdownPart",
+              "settings": {
+                "content": {
+                  "settings": {
+                    "content": "## Create Resources\n\n- __Resource Group__\n    - Name: _LogicApp-demo_\n    - Location: _South Central US_\n- __Storage Account__\n    - Name: _dksdemo_  \n    - Group: _LogicApp-demo_ \n    - Location: _South Central US_ \n    - Container: _customers (private)_\n- __Database__\n    - Name: _dksdemo-db_ \n    - Group: _LogicApp-demo_ \n    - Location: _South Central US_    \n    - Server: _dksdemo_ \n    - Admin: _daniel_\n    - Password: _AzurePassword@123_  \n    - Tier: _Basic_\n- __CSV File__\n    - Name: _import.csv_\n        ```\n        ------------------------\n        First,Last,Company\n        Daniel,Scholl,Microsoft\n        John,Doe,CompanyA\n        Jane,Doe,CompanyB\n        ------------------------\n        ```\n--------\n\n### Logic App  \n- Name: _file-saver_  \n- Location: _South Central US_ \n\n- __Trigger:__ Office 365 Outlook - When a new email arrives\n\n| Name               | Value                                         |\n| ------------------ |-----------------------------------------------|\n| Folder             | Inbox                                         |\n| Has Attachment     | Yes                                           |\n| Include Attachment | Yes                                           |\n| Subject Filter     | Yes                                           |\n| Interval           | 10 Seconds                                    |\n\n- __Condition:__ For each __$Attachments__  where __Name__ is equal _'import.csv'_\n\n- __Action:__ Create Blob  \n\n| Name               | Value                                         |\n| ------------------ |-----------------------------------------------|\n| Connection Name    | logic-app-demo-storage                        |\n| Folder Path        | /customers                                    |\n| Blob Name:         | $NAME                                         |\n| Blob Content       | $CONTENT                                      |\n\n--------\n\n\n##### Prepare the Database\n\nCreate a Storage Access Signature \n\nie:  _sv=2017-07-29&ss=bfqt&srt=sco&sp=rwdlacup&se=2018-05-10T00:41:59Z&st=2018-05-09T16:41:59Z&spr=https&sig=Ly51yEexb2DuZKTL2eaDzNAw6JCznaZkM7OovrXMBEg%3D_\n\n```sql\n-- Create master key that will encrypt credentials\nCREATE MASTER KEY ENCRYPTION BY PASSWORD = 'AzurePassword@123!';\nGO\n\n-- Create a database scoped credential. \n-- NOTE: DO NOT PUT FIRST CHARACTER '?'' IN SECRET!!!\nCREATE DATABASE SCOPED CREDENTIAL BlobStorageCredential \nWITH IDENTITY = 'SHARED ACCESS SIGNATURE',\nSECRET = 'sv=2017-07-29&ss=bfqt&srt=sco&sp=rwdlacup&se=2018-05-05T04:15:21Z&st2018-05-04T20:15:21Z&spr=https&sig=q7RJSaiSzp0rkXvw77lMgtJuk2YKFToSAx%2B7N07CaF8%3D';\nGO\n\n-- Create external data source with the URL of the Blob storage Account and associated credential (if it is not public).\nCREATE EXTERNAL DATA SOURCE BlobStorage\nWITH (\tTYPE = BLOB_STORAGE, \n\t\tLOCATION = 'https://dksdemo.blob.core.windows.net/customers', \n\t\tCREDENTIAL= BlobStorageCredential \t--> CREDENTIAL is not required if a blob storage is public!\n);\nGO\n\n--Create a permanent table. \nDROP TABLE IF EXISTS Customers;\nGO\nCREATE TABLE dbo.Customer(\n    First nvarchar(50) NOT NULL,\n    Last nvarchar(50) NOT NULL,\n    Company nvarchar(50) NOT NULL,\n);\nGO\n\n--Create the Sample Stored Proc\nCREATE PROCEDURE uspImportCustomer   \nAS   \nBEGIN\n    BULK INSERT Customer\n    FROM 'import.csv'\n    WITH \n    (\t\n        DATA_SOURCE = 'BlobStorage',\n        FORMAT='CSV', \n        CODEPAGE = 65001, --UTF-8 encoding\n        FIRSTROW=2,\n        ROWTERMINATOR = '0x0a',\n        TABLOCK\n    )\nEND\nGO\n```\n--------\n\n### Logic App\n- Name: _data-saver_  \n- Location: _South Central US_ \n- __Trigger:__ Azure Storage - When a blob is added or modified  \n\n| Name               | Value                                            |\n| ------------------ |--------------------------------------------------|\n| Trigger            | Azure Storage - When a blob is added or modified |\n| Container          | /customers                                       |\n| Interval           | 10 Seconds                                       |\n \n- __Action:__ SQL Server - Execute Stored Procedure  \n\n| Name               | Value                                         |\n| ------------------ |-----------------------------------------------|\n| Connection Name    | logic-app-demo-sql                            |\n| Procedure Name     | [dbo].[uspImportCustomer]                     |\n\n- __Action:__ Azure Blob Storage - Delete Blob  \n\n| Name               | Value                                         |\n| ------------------ |-----------------------------------------------|\n| Connection Name    | logic-app-demo-storage                        |\n| Blob Name          | /customers/import.csv                         |\n\n--------\n\n##### _Test It Now_\n\n1. Email\n\n    ```\n    To: Daniel.Scholl@microsoft.com\n    Subject: Import this\n    Attach: import.csv\n    ```\n\n1. Data exists now in DB \n\n    ``` \n    SELECT * FROM dbo.Customer\n    ```\n",
+                    "title": "Demo Instructions",
+                    "subtitle": "Daniel Scholl"
+                  }
+                }
+              }
+            }
+          },
+          "2": {
+            "position": {
+              "x": 18,
+              "y": 0,
+              "colSpan": 2,
+              "rowSpan": 6
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceGroup",
+                  "isOptional": true
+                },
+                {
+                  "name": "id",
+                  "value": "/subscriptions/67e82f75-4ce1-49e1-943e-37d4491aa83c/resourcegroups/LogicApp-demo",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ResourceGroupMapPinnedPart"
+            }
+          },
+          "3": {
+            "position": {
+              "x": 18,
+              "y": 6,
+              "colSpan": 2,
+              "rowSpan": 2
+            },
+            "metadata": {
+              "inputs": [],
+              "type": "Extension[azure]/HubsExtension/PartType/MarkdownPart",
+              "settings": {
+                "content": {
+                  "settings": {
+                    "content": "<a href=\"https://azure.microsoft.com/en-us/resources/templates/?term=logic%20app\">ARM Templates</a>\n\n<a href=\"https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdanielscholl%2Fazure-functions-durable%2Fmaster%2Ftemplates%2Fazuredeploy.json\" target=\"_blank\">\n    <img src=\"http://azuredeploy.net/deploybutton.png\"/>\n</a>\n",
+                    "title": "Logic App Templates",
+                    "subtitle": ""
+                  }
+                }
+              }
+            }
+          },
+          "4": {
+            "position": {
+              "x": 0,
+              "y": 9,
+              "colSpan": 1,
+              "rowSpan": 1
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceType",
+                  "value": "Microsoft.Logic/workflows",
+                  "isOptional": true
+                },
+                {
+                  "name": "filter",
+                  "isOptional": true
+                },
+                {
+                  "name": "scope",
+                  "isOptional": true
+                },
+                {
+                  "name": "kind",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/BrowseBaseResourcesPinnedPart"
+            }
+          }
+        }
+      }
+    }
+  },
+  "name": "LogicApp-Demo",
+  "type": "Microsoft.Portal/dashboards",
+  "location": "INSERT LOCATION",
+  "tags": {
+    "hidden-title": "LogicApp-Demo"
+  },
+  "apiVersion": "2015-08-01-preview"
+}
