@@ -122,7 +122,7 @@
                                     }
                                 },
                                 "method": "post",
-                                "path": "[concat('/datasets/default/procedures/@{encodeURIComponent(encodeURIComponent(', variables('singleQuote'), parameters('sqlProcedure'), variables('singleQuote'), '))}')]"
+                                "path": "/datasets/default/procedures/@{encodeURIComponent(encodeURIComponent(parameters('sqlProcedure))}"
                             }
                         }
                     },
