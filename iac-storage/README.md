@@ -21,12 +21,6 @@ az group create --location southcentralus --name my-common
 az group deployment create --template-file azuredeploy.json --parameters azuredeploy.parameters.json --resource-group my-common
 ```
 
-4. __Deploy Storage Keys to KeyVault__
-
-```powershell
-.\scripts\loadKeyVault.ps1 my-common
-```
-
 # Build and Test
 
 1. To manually run the javascript test suite
