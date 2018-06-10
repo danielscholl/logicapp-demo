@@ -14,7 +14,7 @@ Param(
   [string] $ResourceGroupName,
 
   [Parameter(Mandatory = $false)]
-  [string] $ContainerName = "templates"
+  [string] $ContainerName = "assets"
 )
 
 function Create-Container ($ResourceGroupName, $ContainerName) {
@@ -45,12 +45,12 @@ function Create-Container ($ResourceGroupName, $ContainerName) {
       Write-Error -Message "Storage Container $ContainerName creation failed. Please fix and continue"
       return
     }
-  } 
+  }
   else {
     $Container = Get-AzureStorageContainer -Name $ContainerName -Context $StorageContext
 
     Write-Output "Container already exists..."
-        
+
   }
 }
 

@@ -1,0 +1,322 @@
+{
+  "source": 2,
+  "revision": 3,
+  "description": null,
+  "createdBy": {
+    "displayName": "Daniel Scholl",
+    "url": "https://app.vssps.visualstudio.com/A1e113c6c-068d-446c-939a-7557dbd402e8/_apis/Identities/20501658-c92a-621b-9363-453c08f06c14",
+    "_links": {
+      "avatar": {
+        "href": "https://tfsprodcus2.visualstudio.com/Af89e5c14-c91d-4a15-81ac-af8821e93732/_apis/GraphProfile/MemberAvatars/aad.MjA1MDE2NTgtYzkyYS03MjFiLTkzNjMtNDUzYzA4ZjA2YzE0"
+      }
+    },
+    "id": "20501658-c92a-621b-9363-453c08f06c14",
+    "uniqueName": "dascholl@microsoft.com",
+    "imageUrl": "https://tfsprodcus2.visualstudio.com/Af89e5c14-c91d-4a15-81ac-af8821e93732/_api/_common/identityImage?id=20501658-c92a-621b-9363-453c08f06c14",
+    "descriptor": "aad.MjA1MDE2NTgtYzkyYS03MjFiLTkzNjMtNDUzYzA4ZjA2YzE0"
+  },
+  "createdOn": "2018-06-10T17:43:41.447Z",
+  "modifiedBy": {
+    "displayName": "Daniel Scholl",
+    "url": "https://app.vssps.visualstudio.com/A1e113c6c-068d-446c-939a-7557dbd402e8/_apis/Identities/20501658-c92a-621b-9363-453c08f06c14",
+    "_links": {
+      "avatar": {
+        "href": "https://tfsprodcus2.visualstudio.com/Af89e5c14-c91d-4a15-81ac-af8821e93732/_apis/GraphProfile/MemberAvatars/aad.MjA1MDE2NTgtYzkyYS03MjFiLTkzNjMtNDUzYzA4ZjA2YzE0"
+      }
+    },
+    "id": "20501658-c92a-621b-9363-453c08f06c14",
+    "uniqueName": "dascholl@microsoft.com",
+    "imageUrl": "https://tfsprodcus2.visualstudio.com/Af89e5c14-c91d-4a15-81ac-af8821e93732/_api/_common/identityImage?id=20501658-c92a-621b-9363-453c08f06c14",
+    "descriptor": "aad.MjA1MDE2NTgtYzkyYS03MjFiLTkzNjMtNDUzYzA4ZjA2YzE0"
+  },
+  "modifiedOn": "2018-06-10T17:47:36.400Z",
+  "isDeleted": false,
+  "variables": {
+    "Artifact": {
+      "value": "iac-storage"
+    },
+    "ResourceGroup": {
+      "value": "logicapp-demo"
+    },
+    "TemplateGroup": {
+      "value": "logicapp-demo"
+    }
+  },
+  "variableGroups": [],
+  "environments": [
+    {
+      "id": 1,
+      "name": "CI/CD",
+      "rank": 1,
+      "owner": {
+        "displayName": "Daniel Scholl",
+        "url": "https://app.vssps.visualstudio.com/A1e113c6c-068d-446c-939a-7557dbd402e8/_apis/Identities/20501658-c92a-621b-9363-453c08f06c14",
+        "_links": {
+          "avatar": {
+            "href": "https://tfsprodcus2.visualstudio.com/Af89e5c14-c91d-4a15-81ac-af8821e93732/_apis/GraphProfile/MemberAvatars/aad.MjA1MDE2NTgtYzkyYS03MjFiLTkzNjMtNDUzYzA4ZjA2YzE0"
+          }
+        },
+        "id": "20501658-c92a-621b-9363-453c08f06c14",
+        "uniqueName": "dascholl@microsoft.com",
+        "imageUrl": "https://tfsprodcus2.visualstudio.com/Af89e5c14-c91d-4a15-81ac-af8821e93732/_api/_common/identityImage?id=20501658-c92a-621b-9363-453c08f06c14",
+        "descriptor": "aad.MjA1MDE2NTgtYzkyYS03MjFiLTkzNjMtNDUzYzA4ZjA2YzE0"
+      },
+      "variables": {},
+      "variableGroups": [],
+      "preDeployApprovals": {
+        "approvals": [
+          {
+            "rank": 1,
+            "isAutomated": true,
+            "isNotificationOn": false,
+            "id": 1
+          }
+        ],
+        "approvalOptions": {
+          "requiredApproverCount": null,
+          "releaseCreatorCanBeApprover": false,
+          "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+          "enforceIdentityRevalidation": false,
+          "timeoutInMinutes": 0,
+          "executionOrder": 1
+        }
+      },
+      "deployStep": {
+        "id": 2
+      },
+      "postDeployApprovals": {
+        "approvals": [
+          {
+            "rank": 1,
+            "isAutomated": true,
+            "isNotificationOn": false,
+            "id": 3
+          }
+        ],
+        "approvalOptions": {
+          "requiredApproverCount": null,
+          "releaseCreatorCanBeApprover": false,
+          "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+          "enforceIdentityRevalidation": false,
+          "timeoutInMinutes": 0,
+          "executionOrder": 2
+        }
+      },
+      "deployPhases": [
+        {
+          "deploymentInput": {
+            "parallelExecution": {
+              "parallelExecutionType": "none"
+            },
+            "skipArtifactsDownload": false,
+            "artifactsDownloadInput": {
+              "downloadInputs": [
+                {
+                  "artifactItems": [],
+                  "alias": "iac-storage",
+                  "artifactType": "Build",
+                  "artifactDownloadMode": "All"
+                }
+              ]
+            },
+            "queueId": 19,
+            "demands": [],
+            "enableAccessToken": false,
+            "timeoutInMinutes": 0,
+            "jobCancelTimeoutInMinutes": 1,
+            "condition": "succeeded()",
+            "overrideInputs": {}
+          },
+          "rank": 1,
+          "phaseType": 1,
+          "name": "Agent phase",
+          "workflowTasks": [
+            {
+              "taskId": "5e1e3830-fbfb-11e5-aab1-090c92bc4988",
+              "version": "1.*",
+              "name": "Extract files ",
+              "refName": "",
+              "enabled": true,
+              "alwaysRun": false,
+              "continueOnError": false,
+              "timeoutInMinutes": 0,
+              "definitionType": "task",
+              "overrideInputs": {},
+              "condition": "succeeded()",
+              "inputs": {
+                "archiveFilePatterns": "$(System.DefaultWorkingDirectory)/$(Artifact)/drop/*.zip",
+                "destinationFolder": "$(System.DefaultWorkingDirectory)/$(Artifact)/output/",
+                "cleanDestinationFolder": "true"
+              }
+            },
+            {
+              "taskId": "94a74903-f93f-4075-884f-dc11f34058b4",
+              "version": "2.*",
+              "name": "Azure Deployment:Create Or Update Resource Group action on $(ResourceGroup)",
+              "refName": "",
+              "enabled": true,
+              "alwaysRun": false,
+              "continueOnError": false,
+              "timeoutInMinutes": 0,
+              "definitionType": "task",
+              "overrideInputs": {},
+              "condition": "succeeded()",
+              "inputs": {
+                "ConnectedServiceName": "75e8d11d-c505-41df-90c3-4ddd1de9d5a2",
+                "action": "Create Or Update Resource Group",
+                "resourceGroupName": "$(ResourceGroup)",
+                "location": "South Central US",
+                "templateLocation": "Linked artifact",
+                "csmFileLink": "",
+                "csmParametersFileLink": "",
+                "csmFile": "$(System.DefaultWorkingDirectory)/$(Artifact)/output/dist/templates/azuredeploy.json",
+                "csmParametersFile": "$(System.DefaultWorkingDirectory)/$(Artifact)/output/dist/templates/azuredeploy.parameters.json",
+                "overrideParameters": "",
+                "deploymentMode": "Incremental",
+                "enableDeploymentPrerequisites": "None",
+                "deploymentGroupEndpoint": "",
+                "project": "",
+                "deploymentGroupName": "",
+                "copyAzureVMTags": "true",
+                "outputVariable": "",
+                "deploymentOutputs": ""
+              }
+            },
+            {
+              "taskId": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+              "version": "2.*",
+              "name": "Azure PowerShell script: CreateContainer",
+              "refName": "",
+              "enabled": true,
+              "alwaysRun": false,
+              "continueOnError": false,
+              "timeoutInMinutes": 0,
+              "definitionType": "task",
+              "overrideInputs": {},
+              "condition": "succeeded()",
+              "inputs": {
+                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                "ConnectedServiceName": "",
+                "ConnectedServiceNameARM": "75e8d11d-c505-41df-90c3-4ddd1de9d5a2",
+                "ScriptType": "FilePath",
+                "ScriptPath": "$(System.DefaultWorkingDirectory)/$(Artifact)/output/dist/scripts/createContainer.ps1",
+                "Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments",
+                "ScriptArguments": "-ResourceGroupName $(ResourceGroup)",
+                "TargetAzurePs": "OtherVersion",
+                "CustomTargetAzurePs": "5.1.1"
+              }
+            }
+          ]
+        }
+      ],
+      "environmentOptions": {
+        "emailNotificationType": "OnlyOnFailure",
+        "emailRecipients": "release.environment.owner;release.creator",
+        "skipArtifactsDownload": false,
+        "timeoutInMinutes": 0,
+        "enableAccessToken": false,
+        "publishDeploymentStatus": true,
+        "badgeEnabled": false,
+        "autoLinkWorkItems": false,
+        "pullRequestDeploymentEnabled": false
+      },
+      "demands": [],
+      "conditions": [
+        {
+          "name": "ReleaseStarted",
+          "conditionType": 1,
+          "value": ""
+        }
+      ],
+      "executionPolicy": {
+        "concurrencyCount": 1,
+        "queueDepthCount": 0
+      },
+      "schedules": [],
+      "currentRelease": {
+        "id": 1,
+        "url": "https://dascholl.vsrm.visualstudio.com/Demos/_apis/Release/releases/1",
+        "_links": {}
+      },
+      "retentionPolicy": {
+        "daysToKeep": 30,
+        "releasesToKeep": 3,
+        "retainBuild": true
+      },
+      "processParameters": {},
+      "properties": {},
+      "preDeploymentGates": {
+        "id": 0,
+        "gatesOptions": null,
+        "gates": []
+      },
+      "postDeploymentGates": {
+        "id": 0,
+        "gatesOptions": null,
+        "gates": []
+      },
+      "environmentTriggers": [],
+      "badgeUrl": "https://rmsprodscussu1.vsrm.visualstudio.com/Af89e5c14-c91d-4a15-81ac-af8821e93732/_apis/public/Release/badge/6ec57ac9-48a7-4ddb-8b86-f6c72aef7c2b/1/1"
+    }
+  ],
+  "artifacts": [
+    {
+      "sourceId": "6ec57ac9-48a7-4ddb-8b86-f6c72aef7c2b:5",
+      "type": "Build",
+      "alias": "iac-storage",
+      "definitionReference": {
+        "artifactSourceDefinitionUrl": {
+          "id": "https://dascholl.visualstudio.com/_permalink/_build/index?collectionId=f89e5c14-c91d-4a15-81ac-af8821e93732&projectId=6ec57ac9-48a7-4ddb-8b86-f6c72aef7c2b&definitionId=5",
+          "name": ""
+        },
+        "defaultVersionBranch": {
+          "id": "",
+          "name": ""
+        },
+        "defaultVersionSpecific": {
+          "id": "",
+          "name": ""
+        },
+        "defaultVersionTags": {
+          "id": "",
+          "name": ""
+        },
+        "defaultVersionType": {
+          "id": "latestType",
+          "name": "Latest"
+        },
+        "definition": {
+          "id": "5",
+          "name": "iac-storage"
+        },
+        "project": {
+          "id": "6ec57ac9-48a7-4ddb-8b86-f6c72aef7c2b",
+          "name": "Demos"
+        }
+      },
+      "isPrimary": true
+    }
+  ],
+  "triggers": [],
+  "releaseNameFormat": "Release-$(rev:r)",
+  "tags": [],
+  "properties": {
+    "DefinitionCreationSource": {
+      "$type": "System.String",
+      "$value": "ReleaseNew"
+    }
+  },
+  "id": 1,
+  "name": "iac-storage",
+  "path": "\\",
+  "projectReference": null,
+  "url": "https://dascholl.vsrm.visualstudio.com/6ec57ac9-48a7-4ddb-8b86-f6c72aef7c2b/_apis/Release/definitions/1",
+  "_links": {
+    "self": {
+      "href": "https://dascholl.vsrm.visualstudio.com/6ec57ac9-48a7-4ddb-8b86-f6c72aef7c2b/_apis/Release/definitions/1"
+    },
+    "web": {
+      "href": "https://tfsprodcus2.visualstudio.com/Af89e5c14-c91d-4a15-81ac-af8821e93732/6ec57ac9-48a7-4ddb-8b86-f6c72aef7c2b/_release?definitionId=1"
+    }
+  }
+}

@@ -1,0 +1,148 @@
+TAP version 13
+# Subtest: tests/template.spec.js
+    # Subtest: iac-storage
+        # Subtest: template file
+            # Subtest: should exist
+                1..0
+            ok 1 - should exist # time=1.635ms
+            
+            # Subtest: has expected properties
+                # Subtest: should have property $schema
+                    1..0
+                ok 1 - should have property $schema # time=1.521ms
+                
+                # Subtest: should have property contentVersion
+                    1..0
+                ok 2 - should have property contentVersion # time=0.524ms
+                
+                # Subtest: should have property parameters
+                    1..0
+                ok 3 - should have property parameters # time=0.544ms
+                
+                # Subtest: should have property variables
+                    1..0
+                ok 4 - should have property variables # time=0.765ms
+                
+                # Subtest: should have property resources
+                    1..0
+                ok 5 - should have property resources # time=0.513ms
+                
+                # Subtest: should have property outputs
+                    1..0
+                ok 6 - should have property outputs # time=0.452ms
+                
+                1..6
+            ok 2 - has expected properties # time=36.836ms
+            
+            # Subtest: defines the expected parameters
+                # Subtest: should have 2 parameters
+                    1..0
+                ok 1 - should have 2 parameters # time=1.939ms
+                
+                # Subtest: should have a prefix
+                    1..0
+                ok 2 - should have a prefix # time=1.709ms
+                
+                # Subtest: should have a storageAccountType
+                    1..0
+                ok 3 - should have a storageAccountType # time=0.989ms
+                
+                1..3
+            ok 3 - defines the expected parameters # time=16.316ms
+            
+            # Subtest: creates the expected resources
+                # Subtest: should create Microsoft.Storage/storageAccounts
+                    1..0
+                ok 1 - should create Microsoft.Storage/storageAccounts # time=0.533ms
+                
+                1..1
+            ok 4 - creates the expected resources # time=3.804ms
+            
+            # Subtest: ensures storage encryption
+                # Subtest: should define encryption
+                    1..0
+                ok 1 - should define encryption # time=0.455ms
+                
+                # Subtest: should enable encryption
+                    1..0
+                ok 2 - should enable encryption # time=0.67ms
+                
+                1..2
+            ok 5 - ensures storage encryption # time=7.675ms
+            
+            # Subtest: has expected output
+                # Subtest: should define storageAccount
+                    1..0
+                ok 1 - should define storageAccount # time=0.46ms
+                
+                # Subtest: should define storageAccount id
+                    1..0
+                ok 2 - should define storageAccount id # time=0.468ms
+                
+                # Subtest: should define storageAccount name
+                    1..0
+                ok 3 - should define storageAccount name # time=0.415ms
+                
+                # Subtest: should define storageAccount key
+                    1..0
+                ok 4 - should define storageAccount key # time=0.487ms
+                
+                1..4
+            ok 6 - has expected output # time=15.113ms
+            
+            1..6
+        ok 1 - template file # time=100.725ms
+        
+        # Subtest: parameters file
+            # Subtest: should exist
+                1..0
+            ok 1 - should exist # time=0.509ms
+            
+            # Subtest: has expected properties
+                # Subtest: should define $schema
+                    1..0
+                ok 1 - should define $schema # time=0.509ms
+                
+                # Subtest: should define contentVersion
+                    1..0
+                ok 2 - should define contentVersion # time=0.808ms
+                
+                # Subtest: should define parameters
+                    1..0
+                ok 3 - should define parameters # time=0.606ms
+                
+                1..3
+            ok 2 - has expected properties # time=13.966ms
+            
+            1..2
+        ok 2 - parameters file # time=19.87ms
+        
+        1..2
+    ok 1 - iac-storage # time=126.688ms
+    
+    1..1
+    # time=140.296ms
+ok 1 - tests/template.spec.js # time=392.665ms
+
+# Subtest: tests/validate.spec.js
+    # Subtest: az group create
+        ok 1 - e5201-spec-region 
+        1..1
+    ok 1 - az group create # time=2368.684ms
+    
+    # Subtest: az group deployment validate
+        ok 1 - validation: exit 0
+        1..1
+    ok 2 - az group deployment validate # time=1392.658ms
+    
+    # Subtest: az group delete
+        ok 1 - e5201-spec-region deleted.
+        1..1
+    ok 3 - az group delete # time=2277.167ms
+    
+    1..3
+    # time=6047.586ms
+ok 2 - tests/validate.spec.js # time=6235.529ms
+
+1..2
+# time=6641.107ms

@@ -1,0 +1,26 @@
+<testsuite name="TAP Tests" tests="24" failures="0" errors="0" skipped="0" timestamp="Sun, 10 Jun 2018 17:20:29 GMT" time="6.641107">
+<testcase classname="tests/template.spec.js iac-storage template file" name="should exist" time="0.001635"/>
+<testcase classname="tests/template.spec.js iac-storage template file has expected properties" name="should have property $schema" time="0.001521"/>
+<testcase classname="tests/template.spec.js iac-storage template file has expected properties" name="should have property contentVersion" time="0.000524"/>
+<testcase classname="tests/template.spec.js iac-storage template file has expected properties" name="should have property parameters" time="0.000544"/>
+<testcase classname="tests/template.spec.js iac-storage template file has expected properties" name="should have property variables" time="0.0007650000000000001"/>
+<testcase classname="tests/template.spec.js iac-storage template file has expected properties" name="should have property resources" time="0.000513"/>
+<testcase classname="tests/template.spec.js iac-storage template file has expected properties" name="should have property outputs" time="0.00045200000000000004"/>
+<testcase classname="tests/template.spec.js iac-storage template file defines the expected parameters" name="should have 2 parameters" time="0.001939"/>
+<testcase classname="tests/template.spec.js iac-storage template file defines the expected parameters" name="should have a prefix" time="0.001709"/>
+<testcase classname="tests/template.spec.js iac-storage template file defines the expected parameters" name="should have a storageAccountType" time="0.000989"/>
+<testcase classname="tests/template.spec.js iac-storage template file creates the expected resources" name="should create Microsoft.Storage/storageAccounts" time="0.000533"/>
+<testcase classname="tests/template.spec.js iac-storage template file ensures storage encryption" name="should define encryption" time="0.000455"/>
+<testcase classname="tests/template.spec.js iac-storage template file ensures storage encryption" name="should enable encryption" time="0.00067"/>
+<testcase classname="tests/template.spec.js iac-storage template file has expected output" name="should define storageAccount" time="0.00046"/>
+<testcase classname="tests/template.spec.js iac-storage template file has expected output" name="should define storageAccount id" time="0.00046800000000000005"/>
+<testcase classname="tests/template.spec.js iac-storage template file has expected output" name="should define storageAccount name" time="0.000415"/>
+<testcase classname="tests/template.spec.js iac-storage template file has expected output" name="should define storageAccount key" time="0.00048699999999999997"/>
+<testcase classname="tests/template.spec.js iac-storage parameters file" name="should exist" time="0.000509"/>
+<testcase classname="tests/template.spec.js iac-storage parameters file has expected properties" name="should define $schema" time="0.000509"/>
+<testcase classname="tests/template.spec.js iac-storage parameters file has expected properties" name="should define contentVersion" time="0.000808"/>
+<testcase classname="tests/template.spec.js iac-storage parameters file has expected properties" name="should define parameters" time="0.000606"/>
+<testcase classname="tests/validate.spec.js az group create" name="e5201-spec-region" time="0"/>
+<testcase classname="tests/validate.spec.js az group deployment validate" name="validation: exit 0" time="0"/>
+<testcase classname="tests/validate.spec.js az group delete" name="e5201-spec-region deleted." time="0"/>
+</testsuite>
